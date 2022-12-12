@@ -11,7 +11,7 @@ licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 
 ThisBuild / crossScalaVersions := Seq("2.12.17")
 libraryDependencies ++= Seq(
-  "com.heroku.sdk" % "heroku-deploy" % "2.0.16"
+  "com.heroku.sdk" % "heroku-deploy" % "3.0.6"
 )
 
 tlFatalWarnings := false
