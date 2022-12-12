@@ -9,7 +9,7 @@ import sbt.Logger
 import sbt._
 
 import java.io.File
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 class SbtApp(
   buildPackDesc: String,
@@ -68,11 +68,9 @@ class SbtApp(
         s"| targetDir     -> $targetDir \n" +
         s"| jdkVersion    -> $jdkVersion \n" +
         s"| appName       -> $name \n" +
-        s"| includePaths  -> " + JavaConversions
-          .collectionAsScalaIterable(includedFiles)
+        s"| includePaths  -> " + includedFiles.asScala
           .mkString(";") + "\n" +
-        s"| buildpacks    -> " + JavaConversions
-          .collectionAsScalaIterable(buildpacks)
+        s"| buildpacks    -> " + buildpacks.asScala
           .mkString(";") + "\n" +
         s"+--------------------------------------------------------------------\n"
     )
@@ -111,9 +109,7 @@ class SbtApp(
         }
 
     // OMG
-    val javaProcessTypes = JavaConversions.mapAsJavaMap(
-      defaultProcessTypes ++ JavaConversions.mapAsScalaMap(processTypes)
-    )
+    val javaProcessTypes = defaultProcessTypes ++ processTypes.asScala.asJava
 
     try
       super.deploy(includedFiles, configVars, jdkVersion, javaProcessTypes, slugFileName)
@@ -146,9 +142,7 @@ class SbtApp(
     }
 
     // OMG
-    val javaIncludedFiles = JavaConversions.seqAsJavaList(
-      defaultIncludedFiles ++ JavaConversions.collectionAsScalaIterable(includedFiles)
-    )
+    val javaIncludedFiles = defaultIncludedFiles ++ includedFiles.asScala.asJava
 
     super.prepare(javaIncludedFiles, processTypes)
 

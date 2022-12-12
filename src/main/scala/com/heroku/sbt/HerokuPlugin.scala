@@ -6,7 +6,7 @@ package com.heroku.sbt
 import sbt.Keys._
 import sbt._
 
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 object HerokuPlugin extends AutoPlugin {
 
@@ -38,19 +38,19 @@ object HerokuPlugin extends AutoPlugin {
         val baseDirectoryValue         = baseDirectory.value
         val herokuSkipSubProjectsValue = (herokuSkipSubProjects in deployHeroku).value
         val jdkVersion                 = herokuJdkVersion.value
-        val buildpacks                 = JavaConversions.seqAsJavaList(herokuBuildpacks.value)
+        val buildpacks                 = herokuBuildpacks.value.asJava
         val fatjar                     = herokuFatJar.value
         val targetValue                = target.value
         val streamsValue               = streams.value
         val streamsLog                 = streamsValue.log
         val herokuAppNameValue         = herokuAppName.value
-        val configVars                 = JavaConversions.mapAsJavaMap(herokuConfigVars.value)
-        val processTypes               = JavaConversions.mapAsJavaMap(herokuProcessTypes.value)
+        val configVars                 = herokuConfigVars.value.asJava
+        val processTypes               = herokuProcessTypes.value.asJava
         val herokuIncludePathsValue    = herokuIncludePaths.value
         if ((baseDirectoryValue / "project").exists || !herokuSkipSubProjectsValue) {
-          val includedFiles = JavaConversions.seqAsJavaList(herokuIncludePathsValue.map {
+          val includedFiles = herokuIncludePathsValue.map {
             case path: String => new java.io.File(path)
-          })
+          }.asJava
           new SbtApp(
             "sbt-heroku",
             herokuAppNameValue,
