@@ -9,7 +9,7 @@ enablePlugins(SbtPlugin)
 
 licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 
-ThisBuild / crossScalaVersions := Seq("2.12.17")
+ThisBuild / crossScalaVersions := Seq("2.12.19")
 libraryDependencies ++= Seq(
   "com.heroku.sdk" % "heroku-deploy" % "2.0.16"
 )
